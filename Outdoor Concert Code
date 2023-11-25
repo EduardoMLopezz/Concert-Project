@@ -25,16 +25,22 @@ def print_seating():
     for row_num, row in enumerate(seating_data):
         print(f"{row_num:02d} {' '.join(row)}")
     
-def purchace_ticket(name, email, num_tickets, seat_type):
+def purchace_ticket(name, email, seat_type, num_tickets):
     global seating_data
 
-# Find available seats for purchace
-available_seats = []
-for row in range(numbered_Rows):
-    for col in range(0, numbered_Columns - 2, 3):
-        if all(seating_data[row][col + i] == seat_Char for i in range (3)):
-            available_seats.append((row, col))
+    # Find available seats for purchace
+    available_seats = []
+    for row in range(numbered_Rows):
+        for col in range(0, numbered_Columns - 2, 3):
+            if all(seating_data[row][col + i] == seat_Char for i in range (3)):
+                available_seats.append((row, col))
 
-if len(available_seats) < num_tickets:
-    print("Sorry, there aren't enough seats to fufill your request.")
+    if len(available_seats) < num_tickets:
+        print("Sorry, there aren't enough seats to fufill your request.")
     return
+
+    # Reserve(d) seats
+    for i in range(num_tickets):
+        row, col = available_seats[i]
+        for j in range (3):
+            seating_data[row][col +j] = occupied_Char
