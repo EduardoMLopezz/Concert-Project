@@ -3,9 +3,11 @@ import json
 
 numbered_Rows = 20
 numbered_Columns = 26
-seating_Options = {"Front": {"price": 80, "rows": (0, 4)},
-                   "Middle": {"price": 50, "rows": (5, 10)},
-                   "Back": {"price": 25, "rows": (11, 19)}}
+seating_Options = {
+    "Front": {"price": 80, "rows": (0, 4)},
+    "Middle": {"price": 50, "rows": (5, 10)},
+    "Back": {"price": 25, "rows": (11, 19)}
+}
 seat_Char = "."
 occupied_Char = "X"
 empty_Char = "e"
@@ -16,24 +18,36 @@ data_File = "concert_data.json"
 # Global variables
 seating_data = []
 
-def create_seating():
-    global seating_data
-    seating_data = [[seat_Char] * numbered_Columns for _ in range (numbered_Rows)]
+def create_seating():   
+    return [[seat_Char] * numbered_Columns for _ in range(numbered_Rows)]
 
 def print_seating():
     print("  " + " ".join([chr(col + 65) for col in range (numbered_Columns)]))
     for row_num, row in enumerate(seating_data):
         print(f"{row_num:02d} {' '.join(row)}")
+
+def save_data():
+    data = {'seating': seating_data, 'purchases': purchases}
+    with open(data_File, 'w') as file:
+        json.dump(data, file)
+
+def load_data():
+    try:
+        with open(data_File, 'r') as file:
+            data = json.load(file)
+        return data['seating'], data['purchases']
+    except FileNotFoundError:
+        return create_seating(), []
     
 def purchase_ticket(name, email, seat_type, num_tickets):
-    global seating_data
+    global seating_data, purchases
 
     # Find available seats for purchase
     available_seats = []
     for row in range(numbered_Rows):
         for col in range(0, numbered_Columns - 2, 3):
             if all(seating_data[row][col + i] == seat_Char for i in range (3)):
-                available_seats.append((row, col))
+                available_seats.append((row, col))               
 
     if len(available_seats) < num_tickets:
         print("Sorry, there aren't enough seats to fufill your request.")
@@ -59,8 +73,8 @@ def purchase_ticket(name, email, seat_type, num_tickets):
         "seat_type": seat_type,
         "total": total
     }            
-    with open(data_File, "a") as purchase_file:
-        purchase_file.write(json.dumps(purchase_data) + "\n")
+    purchases.append(purchase_data)
+    save_data()
 
     # Display the receipt
     print(f"\nThank you, {name}! Your purchase is complete.")
@@ -70,15 +84,18 @@ def purchase_ticket(name, email, seat_type, num_tickets):
     print(f"Total: ${total:.2f}")
 
 def search_by_name(name):
-    with open(data_File, "r") as purchase_file:
-        for line in purchase_file:
-            purchase_data = json.loads(line)
-            if purchase_data["name"] == name:
-                print(f"Name: {purchase_data['name']}, Email: {purchase_data['email']}")
-                print(f"Tickets Purchased: {purchase_data['num_tickets']} ({purchase_data['seat_type']} type)")
-                print(f"Total Price: ${purchase_data['total']:.2f}")
+        matching_purchases = [p for p in purchases if p['name'].lower() == name.lower()]
+        if matching_purchases:
+            print("\Matching purchases:")
+            for p in matching_purchases:
+                print(f"Name: {p['Name']}, Email: {p['email']}")
+                print(f"Tickets Purchased: {p['num_tickets']} ({p['seat_type']} type)")
+                print(f"Total Price: ${p['total']:.2f}")
                 print("-" * 30)
-
+        else:
+            print("No matching purchases found.")
+        
+        
 def display_all_purchases():
     with open(data_File, "r") as purchase_file:
         for line in purchase_file:
@@ -93,13 +110,10 @@ def main():
 
     try:
         with open(data_File, "r") as data_file:
-            global seating_data
+            global
             seating_data = json.load(data_file)
     except FileNotFoundError:
         create_seating()
-    except json.JSONDecodeError:
-        print("Error decoding JSON data. Initializing seating data.")
-        create_seating
 
     while True:
         print("\nMenu:")
