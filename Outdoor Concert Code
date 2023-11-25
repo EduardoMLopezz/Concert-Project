@@ -44,3 +44,18 @@ def purchace_ticket(name, email, seat_type, num_tickets):
         row, col = available_seats[i]
         for j in range (3):
             seating_data[row][col +j] = occupied_Char
+    
+    # Calculate seat prices
+    price = seat_type[seat_type]["price"]
+    sub_total = price * num_tickets
+    tax = sub_total * tax_Rate
+    total = sub_total + tax + (mask_Fee * num_tickets)
+
+    # Save purchase data to a JSON file
+    purchase_data = {
+        "name": name,
+        "email": email,
+        "num_tickets": num_tickets,
+        "seat_type": seat_type,
+        "total": total
+    }            
