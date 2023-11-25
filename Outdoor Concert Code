@@ -123,4 +123,9 @@ def main():
                 continue
             purchase_ticket(name, email, seat_type, num_tickets)
         elif choice == 's':
-            name = input("Enter the name") 
+            name = input("Enter the name to search: ") 
+            search_by_name(name)
+        elif choice == 'd':
+            display_all_purchases()
+        elif choice =='q':
+            
