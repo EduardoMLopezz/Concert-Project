@@ -99,7 +99,7 @@ def main():
         create_seating()
     except json.JSONDecodeError:
         print("Error decoding JSON data. Initializing seating data.")
-        create_seating()
+        create_seating
 
     while True:
         print("\nMenu:")
