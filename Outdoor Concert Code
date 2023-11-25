@@ -59,3 +59,12 @@ def purchace_ticket(name, email, seat_type, num_tickets):
         "seat_type": seat_type,
         "total": total
     }            
+    with open(data_File, "a") as purchase_file:
+        purchace_file.write(json.dumps(purchase_data) + "\n")
+
+    # Display the receipt
+    print(f"\nThank you, {name}! Your purchase is complete.")
+    print(f"Subtotal: ${sub_total:.2f}")
+    print(f"Tax: ${tax:.2f}")
+    print(f"Mask Fee: ${mask_Fee * num_tickets:.2f}")
+    print(f"Total: ${total:.2f}")
