@@ -19,3 +19,8 @@ seating_data = []
 def create_seating():
     global seating_data
     seating_data = [[seat_Char] * numbered_Columns for _ in range (numbered_Rows)]
+
+def print_seating():
+    print("  " + " ".join([chr(col + 65) for col in range (numbered_Columns)]))
+    for row_num, row in enumerate(seating_data):
+        print(f"{row_num:02d} {' '.join(row)}")
