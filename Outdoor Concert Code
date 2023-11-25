@@ -87,3 +87,40 @@ def display_all_purchases():
             print(f"Tickets Purchased: {purchase_data['num_tickets']} ({purchase_data['seat_type']} type)")
             print(f"Total Price: ${purchase_data['total']:.2f}")
             print("-" * 30)
+
+def main():
+    create_seating()
+
+    try:
+        with open(data_File, "r") as data_file:
+            seating_data = json.load(data_file)
+    except FileNotFoundError:
+        create_seating()
+
+    while True:
+        print("\nMenu:")
+        print("[V]iew seating")
+        print("[B]uy a ticket")
+        print("[S]earch by name")
+        print("[D]isplay all purchases")
+        print("[Q]uit")
+        choice = input("Enter your choice:").strip().lower()
+
+        if choice =='v':
+            print_seating()
+        elif choice =='b':
+            name = input("Enter your name: ")
+            email = input("Enter your email: ")
+            print("Available seat types: Front, Middle, Back")
+            seat_type = input ("Enter the type of seat you want: ").capitalize()
+            if seat_type not in seating_Options:
+                print("Invalid seat type.")
+                continue
+            try:
+                num_tickets = int(input("Enter the number of tickets you'd like to purchase: "))
+            except ValueError:
+                print("Invalid numberr of tickets.")
+                continue
+            purchase_ticket(name, email, seat_type, num_tickets)
+        elif choice == 's':
+            name = input("Enter the name")
