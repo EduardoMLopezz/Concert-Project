@@ -25,10 +25,10 @@ def print_seating():
     for row_num, row in enumerate(seating_data):
         print(f"{row_num:02d} {' '.join(row)}")
     
-def purchace_ticket(name, email, seat_type, num_tickets):
+def purchase_ticket(name, email, seat_type, num_tickets):
     global seating_data
 
-    # Find available seats for purchace
+    # Find available seats for purchase
     available_seats = []
     for row in range(numbered_Rows):
         for col in range(0, numbered_Columns - 2, 3):
@@ -46,7 +46,7 @@ def purchace_ticket(name, email, seat_type, num_tickets):
             seating_data[row][col +j] = occupied_Char
     
     # Calculate seat prices
-    price = seat_type[seat_type]["price"]
+    price = seating_Options[seat_type]["price"]
     sub_total = price * num_tickets
     tax = sub_total * tax_Rate
     total = sub_total + tax + (mask_Fee * num_tickets)
