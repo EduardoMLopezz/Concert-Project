@@ -93,6 +93,7 @@ def main():
 
     try:
         with open(data_File, "r") as data_file:
+            global seating_data
             seating_data = json.load(data_file)
     except FileNotFoundError:
         create_seating()
