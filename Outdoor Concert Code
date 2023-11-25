@@ -1,0 +1,8 @@
+import json
+# Constants that won't be changed throughout the project
+
+numbered_Rows = 20
+numbered_Columns = 26
+seating_Options = {"Front": {"price": 80, "rows": (0, 4)},
+                   "Middle": {"price": 50, "rows": (5, 10)},
+                   "Back": {"price": 25, "rows": (11, 19)}}
