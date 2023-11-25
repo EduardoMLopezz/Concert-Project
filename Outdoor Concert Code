@@ -83,3 +83,7 @@ def display_all_purchases():
     with open(data_File, "r") as purchase_file:
         for line in purchase_file:
             purchase_data = json.loads(line)
+            print(f"Name: {purchase_data['name']}, Email: {purchase_data['email']}")
+            print(f"Tickets Purchased: {purchase_data['num_tickets']} ({purchase_data['seat_type']} type)")
+            print(f"Total Price: ${purchase_data['total']:.2f}")
+            print("-" * 30)
