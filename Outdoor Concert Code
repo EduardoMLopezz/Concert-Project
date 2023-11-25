@@ -97,6 +97,9 @@ def main():
             seating_data = json.load(data_file)
     except FileNotFoundError:
         create_seating()
+    except json.JSONDecodeError:
+        print("Error decoding JSON data. Initializing seating data.")
+        create_seating()
 
     while True:
         print("\nMenu:")
