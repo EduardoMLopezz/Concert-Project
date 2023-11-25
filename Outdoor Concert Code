@@ -37,7 +37,7 @@ def purchase_ticket(name, email, seat_type, num_tickets):
 
     if len(available_seats) < num_tickets:
         print("Sorry, there aren't enough seats to fufill your request.")
-    return
+        return
 
     # Reserve(d) seats
     for i in range(num_tickets):
@@ -60,7 +60,7 @@ def purchase_ticket(name, email, seat_type, num_tickets):
         "total": total
     }            
     with open(data_File, "a") as purchase_file:
-        purchace_file.write(json.dumps(purchase_data) + "\n")
+        purchase_file.write(json.dumps(purchase_data) + "\n")
 
     # Display the receipt
     print(f"\nThank you, {name}! Your purchase is complete.")
