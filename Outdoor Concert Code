@@ -24,3 +24,13 @@ def print_seating():
     print("  " + " ".join([chr(col + 65) for col in range (numbered_Columns)]))
     for row_num, row in enumerate(seating_data):
         print(f"{row_num:02d} {' '.join(row)}")
+    
+def purchace_ticket(name, email, num_tickets, seat_type):
+    global seating_data
+
+# Find available seats for purchace
+available_seats = []
+for row in range(numbered_Rows):
+    for col in range(0, numbered_Columns - 2, 3):
+        if all(seating_data[row][col + i] == seat_Char for i in range (3)):
+            available_seats.append((row, col))
