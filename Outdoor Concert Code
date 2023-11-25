@@ -34,3 +34,7 @@ for row in range(numbered_Rows):
     for col in range(0, numbered_Columns - 2, 3):
         if all(seating_data[row][col + i] == seat_Char for i in range (3)):
             available_seats.append((row, col))
+
+if len(available_seats) < num_tickets:
+    print("Sorry, there aren't enough seats to fufill your request.")
+    return
