@@ -6,3 +6,16 @@ numbered_Columns = 26
 seating_Options = {"Front": {"price": 80, "rows": (0, 4)},
                    "Middle": {"price": 50, "rows": (5, 10)},
                    "Back": {"price": 25, "rows": (11, 19)}}
+seat_Char = "."
+occupied_Char = "X"
+empty_Char = "e"
+tax_Rate = 0.0725
+mask_Fee = 5.00
+data_File = "concert_data.json"
+
+# Global variables
+seating_data = []
+
+def create_seating():
+    global seating_data
+    seating_data = [[seat_Char] * numbered_Columns for _ in range (numbered_Rows)]
