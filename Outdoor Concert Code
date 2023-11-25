@@ -68,3 +68,11 @@ def purchace_ticket(name, email, seat_type, num_tickets):
     print(f"Tax: ${tax:.2f}")
     print(f"Mask Fee: ${mask_Fee * num_tickets:.2f}")
     print(f"Total: ${total:.2f}")
+
+def search_by_name(name):
+    with open(data_File, "r") as purchase_file:
+        for line in purchase_file:
+            purchase_data = json.loads(line)
+            if purchase_data["name"] == name:
+                print(f"Name: {purchase_data['name']}, Email: {purchase_data['email']}")
+                
