@@ -94,26 +94,18 @@ def search_by_name(name):
                 print("-" * 30)
         else:
             print("No matching purchases found.")
-        
-        
+               
 def display_all_purchases():
-    with open(data_File, "r") as purchase_file:
-        for line in purchase_file:
-            purchase_data = json.loads(line)
-            print(f"Name: {purchase_data['name']}, Email: {purchase_data['email']}")
-            print(f"Tickets Purchased: {purchase_data['num_tickets']} ({purchase_data['seat_type']} type)")
-            print(f"Total Price: ${purchase_data['total']:.2f}")
-            print("-" * 30)
-
+    print("\nAll purchases:")
+    for p in purchases:
+        print(f"Name: {p['name']}, Email: {p['email']}")
+        print(f"Tickets Purchased: {p['num_tickets']} ({p['seat_type']} type)")
+        print(f"Total Price: ${p['total']:.2f}")
+        print("-" * 30)
+    
 def main():
-    create_seating()
-
-    try:
-        with open(data_File, "r") as data_file:
-            global
-            seating_data = json.load(data_file)
-    except FileNotFoundError:
-        create_seating()
+    global seating_data, purchases
+    seating_data, purchases = load_data()
 
     while True:
         print("\nMenu:")
@@ -146,8 +138,7 @@ def main():
         elif choice == 'd':
             display_all_purchases()
         elif choice =='q':
-            with open(data_File, "w") as date_file:
-                json.dump(seating_data, data_file)
+            save_data()
             print("Goodbye!")
             break
         else:
