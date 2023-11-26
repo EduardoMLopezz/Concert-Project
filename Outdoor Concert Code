@@ -35,9 +35,14 @@ def load_data():
     try:
         with open(data_File, 'r') as file:
             data = json.load(file)
-        return data['seating'], data['purchases']
+            seating_data = data.get('seating', create_seating())
+            purchases = data.get('purchases', [])
+        return seating_data, purchases
     except FileNotFoundError:
         return create_seating(), []
+    except json.JSONDecodeError:
+        print("Error decoding JSON data. Initializing seating data.")
+        return create_seating(),[]
     
 def purchase_ticket(name, email, seat_type, num_tickets):
     global seating_data, purchases
@@ -88,7 +93,7 @@ def search_by_name(name):
         if matching_purchases:
             print("\Matching purchases:")
             for p in matching_purchases:
-                print(f"Name: {p['Name']}, Email: {p['email']}")
+                print(f"Name: {p['name']}, Email: {p['email']}")
                 print(f"Tickets Purchased: {p['num_tickets']} ({p['seat_type']} type)")
                 print(f"Total Price: ${p['total']:.2f}")
                 print("-" * 30)
