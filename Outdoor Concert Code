@@ -35,14 +35,16 @@ def load_data():
     try:
         with open(data_File, 'r') as file:
             data = json.load(file)
-            seating_data = data.get('seating', create_seating())
+            seating_data = data.get('seating')
             purchases = data.get('purchases', [])
-        return seating_data, purchases
-    except FileNotFoundError:
-        return create_seating(), []
-    except json.JSONDecodeError:
-        print("Error decoding JSON data. Initializing seating data.")
-        return create_seating(),[]
+        if seating_data is None or len(seating_data) != numbered_Rows or any (len(row) != numbered_Columns for row in seating_data):
+            raise ValueError("Invalid seating data. Initializing seating data.")
+    except (FileNotFoundError, json.JSONDeodeError, ValueError):
+        seating_data = create_seating()
+        purchases = []
+
+    return seating_data, purchases
+       
     
 def purchase_ticket(name, email, seat_type, num_tickets):
     global seating_data, purchases
